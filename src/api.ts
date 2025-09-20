@@ -2,7 +2,7 @@ import axios from "axios";
 
 // ✅ Use relative base URL for dev proxy (Vite) and production reverse proxy
 // const API_BASE = import.meta.env.VITE_API_BASE || "/api";
-const API_BASE = "/poc/api";
+const API_BASE = "/api";
 
 const instance = axios.create({
   baseURL: API_BASE,

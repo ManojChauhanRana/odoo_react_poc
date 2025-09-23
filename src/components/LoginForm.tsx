@@ -1,39 +1,261 @@
 import React, { useState } from "react";
 import { login } from "../api";
+import logo from "C:/react_s/odoo_react_poc/src/logo/island_innovators_logo2.png";
+
 
 export default function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
   const [db, setDb] = useState("your_db_name");
   const [loginName, setLoginName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setIsLoading(true);
     try {
       await login(loginName, password);
       onSuccess?.();
     } catch (err: any) {
       setError(err.message || "Login failed");
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return (
-    <form onSubmit={submit}>
-      <div>
-        <label>DB:</label>
-        <input value={db} onChange={(e) => setDb(e.target.value)} />
+ return (
+  <div style={styles.container}>
+    <div style={styles.header}>
+      <div style={styles.logoContainer}>
+        <img src={logo} alt="Island Innovators Logo" style={styles.logoImage} />
       </div>
-      <div>
-        <label>Login:</label>
-        <input value={loginName} onChange={(e) => setLoginName(e.target.value)} />
+    </div>
+
+      {/* Login Card - Centered */}
+      <div style={styles.cardWrapper}>
+        <div style={styles.card}>
+          <form onSubmit={submit} style={styles.form}>
+            <div style={styles.fieldGroup}>
+              <label style={styles.label}>Login</label>
+              <input
+                type="text"
+                value={loginName}
+                onChange={(e) => setLoginName(e.target.value)}
+                placeholder="Enter your login"
+                style={styles.input}
+                
+              />
+            </div>
+
+            <div style={styles.fieldGroup}>
+              <label style={styles.label}>Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                style={styles.input}
+                
+              />
+            </div>
+
+            {error && (
+              <div style={styles.errorContainer}>
+                {error}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              style={{
+                ...styles.submitButton,
+                ...(isLoading ? styles.submitButtonDisabled : {})
+              }}
+            >
+              {isLoading ? 'Signing In...' : 'Submit'}
+            </button>
+          </form>
+        </div>
       </div>
-      <div>
-        <label>Password:</label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+
+      {/* Footer */}
+      <div style={styles.footer}>
+        <div style={styles.footerContent}>
+          <div style={styles.footerLogoSection}>
+  <img 
+    src={logo} 
+    alt="Island Innovators Logo" 
+    style={styles.footerLogoImage} 
+  />
+</div>
+          <div style={styles.footerText}>
+            Contact Us{' '}
+            <a href="mailto:hello@islandinnovators.org" style={styles.footerLink}>
+              hello@islandinnovators.org
+            </a>
+          </div>
+          <div style={styles.footerText}>
+            Follow us on Instagram{' '}
+            <a href="#" style={styles.footerLink}>📷</a>
+          </div>
+        </div>
       </div>
-      <button type="submit">Login</button>
-      {error && <div style={{ color: "red" }}>{error}</div>}
-    </form>
+    </div>
   );
 }
+const styles: Record<string, React.CSSProperties> = {
+  appContainer: {
+    width: "100%",
+    minHeight: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    backgroundColor: "rgb(61, 69, 77)", 
+  },
+  // Header only for logo
+  header: {
+    display: 'flex',
+    justifyContent: 'center', 
+    alignItems: 'flex-start',   
+  padding: '0rem 0 0rem 0', 
+  width: '100%',
+  },
+
+  
+  logoContainer: {
+  border: "2px solid #fffee2", 
+  borderRadius: "15px",
+  width: "1280px",        
+  padding: "1px",             
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  marginBottom: "1px",
+  marginTop: "30px" ,      
+  backgroundColor: "#3d454d",  
+},
+
+  logoImage: {
+    width:'400px',
+    height: '100px', 
+    objectFit: 'contain' as const,
+    marginBottom: "-30px",
+  },
+
+  
+  cardWrapper: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    marginTop: '2rem',   
+    padding: '1rem 2rem',
+  },
+
+ 
+  card: {
+    backgroundColor: '#fffee2',
+    borderRadius: '24px',
+    padding: '2rem',
+    boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
+    width: '100%',
+    maxWidth: '400px',
+  },
+
+  form: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: '1.5rem',
+  },
+
+  fieldGroup: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: '0.5rem',
+  },
+
+  label: {
+    color: 'rgb(61, 69, 77)',
+    fontSize: '0.875rem',
+    fontWeight: '500' as const,
+    margin: 0,
+  },
+
+  input: {
+    width: '100%',
+    padding: '12px 16px',
+    backgroundColor: 'white',
+    border: '1px solid rgb(229, 231, 235)',
+    borderRadius: '8px',
+    fontSize: '1rem',
+    outline: 'none',
+    transition: 'all 0.2s',
+    boxSizing: 'border-box' as const,
+    color: '#333',
+  },
+
+  errorContainer: {
+    backgroundColor: 'rgb(254, 226, 226)',
+    border: '1px solid rgb(248, 113, 113)',
+    color: 'rgba(252, 234, 234, 1)',
+    padding: '12px 16px',
+    borderRadius: '8px',
+  },
+
+  submitButton: {
+    width: '100%',
+    backgroundColor: 'rgb(61, 69, 77)',
+    color: 'white',
+    padding: '12px 24px',
+    borderRadius: '8px',
+    fontWeight: '500' as const,
+    border: 'none',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    fontSize: '1rem',
+  },
+
+  submitButtonDisabled: {
+    opacity: 0.5,
+    cursor: 'not-allowed',
+  },
+
+
+  footer: {
+    position: 'relative' as const, 
+    marginTop: '-2rem',             
+    padding: '1rem 0',
+  },
+
+  footerContent: {
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: '0 1rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap' as const,
+    gap: '1rem',
+  },
+
+  footerLogoSection: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+
+  footerLogoImage: {
+    height: '200px',
+    maxWidth: '300px',
+    objectFit: 'contain' as const,
+  },
+
+  footerText: {
+    color: '#fffee2',
+  },
+
+  footerLink: {
+    color: '#60a5fa',
+    textDecoration: 'none',
+  },
+};

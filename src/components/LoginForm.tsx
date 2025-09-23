@@ -4,7 +4,6 @@ import logo from "C:/react_s/odoo_react_poc/src/logo/island_innovators_logo2.png
 
 
 export default function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
-  const [db, setDb] = useState("your_db_name");
   const [loginName, setLoginName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);

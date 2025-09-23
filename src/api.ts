@@ -1,7 +1,8 @@
 import axios from "axios";
 
 // ✅ Use relative base URL for dev proxy (Vite) and production reverse proxy
-const API_BASE = import.meta.env.VITE_API_BASE || "/api";
+// const API_BASE = import.meta.env.VITE_API_BASE || "/api";
+const API_BASE = "https://islandinnovators-react-odoo-integration-23954454.dev.odoo.com/odoo";
 
 const instance = axios.create({
   baseURL: API_BASE,

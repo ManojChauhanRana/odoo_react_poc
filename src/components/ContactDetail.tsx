@@ -48,7 +48,7 @@ const detailStyles: { [key: string]: React.CSSProperties } = {
     alignItems: "flex-start",
     gap: "20px",
     padding: "20px",
-    background: "#f9f9f9",
+    background: "#fffee2",
     borderRadius: "12px",
     maxWidth: "600px",
     margin: "20px auto",

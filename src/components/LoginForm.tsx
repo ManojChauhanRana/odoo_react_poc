@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { login } from "../api";
-import logo from "C:/react_s/odoo_react_poc/src/logo/island_innovators_logo2.png";
+import logo from "../assets/island_innovators_logo2.png";
 
 
 export default function LoginForm({ onSuccess }: { onSuccess?: () => void }) {

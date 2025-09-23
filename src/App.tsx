@@ -4,7 +4,7 @@ import LoginForm from "./components/LoginForm";
 import ContactList from "./components/ContactList";
 import ContactDetail from "./components/ContactDetail";
 import { setToken } from "./api";
-import logo from "C:/react_s/odoo_react_poc/src/logo/island_innovators_logo2.png";
+import logo from "../src/assets/island_innovators_logo2.png";
 
 export default function App() {
   const [authed, setAuthed] = useState(!!localStorage.getItem("jwt_token"));

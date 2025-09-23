@@ -15,7 +15,7 @@ export default function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
     setError(null);
     setIsLoading(true);
     try {
-      await login(db, loginName, password);
+      await login(loginName, password);
       onSuccess?.();
     } catch (err: any) {
       setError(err.message || "Login failed");

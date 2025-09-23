@@ -11,7 +11,7 @@ export default function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
     e.preventDefault();
     setError(null);
     try {
-      await login(db, loginName, password);
+      await login(loginName, password);
       onSuccess?.();
     } catch (err: any) {
       setError(err.message || "Login failed");

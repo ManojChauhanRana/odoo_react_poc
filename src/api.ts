@@ -1,15 +1,14 @@
 import axios from "axios";
 
-// ✅ Use relative base URL for dev proxy (Vite) and production reverse proxy
-// const API_BASE = import.meta.env.VITE_API_BASE || "/api";
-const API_BASE = "/api";
+// ✅ Direct Odoo.sh API base
+const API_BASE = "https://islandinnovators-staging-23962407.dev.odoo.com/api";
 
 const instance = axios.create({
   baseURL: API_BASE,
   headers: { "Content-Type": "application/json" },
 });
 
-// set token if present
+// ✅ Set or remove token in axios headers and localStorage
 export function setToken(token?: string) {
   if (token) {
     instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -20,19 +19,21 @@ export function setToken(token?: string) {
   }
 }
 
-// try to set token from storage on load
+// ✅ Try to set token from storage on load
 const stored = localStorage.getItem("jwt_token");
 if (stored) setToken(stored);
 
-export async function login(db: string, login: string, password: string) {
-  const res = await instance.post("/login", { db, login, password });
-  if (res.data && res.data.token) {
+// ✅ Login function
+export async function login(login: string, password: string) {
+  const res = await instance.post("/login", { login, password });
+  if (res.data?.token) {
     setToken(res.data.token);
     return res.data;
   }
-  throw new Error(res.data.error || "Login failed");
+  throw new Error(res.data?.error || "Login failed");
 }
 
+// ✅ Fetch all contacts
 export async function fetchContacts() {
   const res = await instance.get("/contacts");
   return res.data.contacts;

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // ✅ Direct Odoo.sh API base
-const API_BASE = "https://islandinnovators-staging-23962407.dev.odoo.com/api";
+const API_BASE = "https://islandinnovators-react-odoo-integration-23960110.dev.odoo.com/api";
 
 const instance = axios.create({
   baseURL: API_BASE,

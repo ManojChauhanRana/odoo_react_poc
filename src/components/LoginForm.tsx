@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { login } from "../api";
-import { useNavigate } from "react-router-dom"; // import useNavigate
+import { useNavigate } from "react-router-dom"; // ✅ added
 import logo from "../assets/island_innovators_logo2.png";
 
-export default function LoginForm() {
+export default function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
   const [loginName, setLoginName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const navigate = useNavigate(); // initialize navigate
+  const navigate = useNavigate(); // ✅ initialize
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,7 +17,8 @@ export default function LoginForm() {
     setIsLoading(true);
     try {
       await login(loginName, password);
-      navigate("/"); // redirect to home
+      onSuccess?.();     // ✅ notify parent (App.tsx can setAuthed(true))
+      navigate("/");     // ✅ redirect to home
     } catch (err: any) {
       setError(err.message || "Login failed");
     } finally {
@@ -27,14 +28,13 @@ export default function LoginForm() {
 
   return (
     <div style={styles.container}>
-      {/* Header */}
       <div style={styles.header}>
         <div style={styles.logoContainer}>
           <img src={logo} alt="Island Innovators Logo" style={styles.logoImage} />
         </div>
       </div>
 
-      {/* Login Card */}
+      {/* Login Card - Centered */}
       <div style={styles.cardWrapper}>
         <div style={styles.card}>
           <form onSubmit={submit} style={styles.form}>
@@ -80,16 +80,26 @@ export default function LoginForm() {
       <div style={styles.footer}>
         <div style={styles.footerContent}>
           <div style={styles.footerLogoSection}>
-            <img src={logo} alt="Island Innovators Logo" style={styles.footerLogoImage} />
+            <img
+              src={logo}
+              alt="Island Innovators Logo"
+              style={styles.footerLogoImage}
+            />
           </div>
           <div style={styles.footerText}>
             Contact Us{" "}
-            <a href="mailto:hello@islandinnovators.org" style={styles.footerLink}>
+            <a
+              href="mailto:hello@islandinnovators.org"
+              style={styles.footerLink}
+            >
               hello@islandinnovators.org
             </a>
           </div>
           <div style={styles.footerText}>
-            Follow us on Instagram <a href="#" style={styles.footerLink}>📷</a>
+            Follow us on Instagram{" "}
+            <a href="#" style={styles.footerLink}>
+              📷
+            </a>
           </div>
         </div>
       </div>

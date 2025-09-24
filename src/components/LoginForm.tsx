@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { login } from "../api";
+import { useNavigate } from "react-router-dom"; // ✅ added
 import logo from "../assets/island_innovators_logo2.png";
-
 
 export default function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
   const [loginName, setLoginName] = useState("");
@@ -9,13 +9,16 @@ export default function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const navigate = useNavigate(); // ✅ initialize
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
     try {
       await login(loginName, password);
-      onSuccess?.();
+      onSuccess?.();     // ✅ notify parent (App.tsx can setAuthed(true))
+      navigate("/");     // ✅ redirect to home
     } catch (err: any) {
       setError(err.message || "Login failed");
     } finally {
@@ -23,13 +26,13 @@ export default function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
     }
   };
 
- return (
-  <div style={styles.container}>
-    <div style={styles.header}>
-      <div style={styles.logoContainer}>
-        <img src={logo} alt="Island Innovators Logo" style={styles.logoImage} />
+  return (
+    <div style={styles.container}>
+      <div style={styles.header}>
+        <div style={styles.logoContainer}>
+          <img src={logo} alt="Island Innovators Logo" style={styles.logoImage} />
+        </div>
       </div>
-    </div>
 
       {/* Login Card - Centered */}
       <div style={styles.cardWrapper}>
@@ -43,7 +46,6 @@ export default function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
                 onChange={(e) => setLoginName(e.target.value)}
                 placeholder="Enter your login"
                 style={styles.input}
-                
               />
             </div>
 
@@ -55,25 +57,20 @@ export default function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
                 style={styles.input}
-                
               />
             </div>
 
-            {error && (
-              <div style={styles.errorContainer}>
-                {error}
-              </div>
-            )}
+            {error && <div style={styles.errorContainer}>{error}</div>}
 
             <button
               type="submit"
               disabled={isLoading}
               style={{
                 ...styles.submitButton,
-                ...(isLoading ? styles.submitButtonDisabled : {})
+                ...(isLoading ? styles.submitButtonDisabled : {}),
               }}
             >
-              {isLoading ? 'Signing In...' : 'Submit'}
+              {isLoading ? "Signing In..." : "Submit"}
             </button>
           </form>
         </div>
@@ -83,27 +80,33 @@ export default function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
       <div style={styles.footer}>
         <div style={styles.footerContent}>
           <div style={styles.footerLogoSection}>
-  <img 
-    src={logo} 
-    alt="Island Innovators Logo" 
-    style={styles.footerLogoImage} 
-  />
-</div>
+            <img
+              src={logo}
+              alt="Island Innovators Logo"
+              style={styles.footerLogoImage}
+            />
+          </div>
           <div style={styles.footerText}>
-            Contact Us{' '}
-            <a href="mailto:hello@islandinnovators.org" style={styles.footerLink}>
+            Contact Us{" "}
+            <a
+              href="mailto:hello@islandinnovators.org"
+              style={styles.footerLink}
+            >
               hello@islandinnovators.org
             </a>
           </div>
           <div style={styles.footerText}>
-            Follow us on Instagram{' '}
-            <a href="#" style={styles.footerLink}>📷</a>
+            Follow us on Instagram{" "}
+            <a href="#" style={styles.footerLink}>
+              📷
+            </a>
           </div>
         </div>
       </div>
     </div>
   );
 }
+
 const styles: Record<string, React.CSSProperties> = {
   appContainer: {
     width: "100%",

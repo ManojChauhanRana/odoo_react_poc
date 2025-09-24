@@ -9,43 +9,45 @@ import logo from "../src/assets/island_innovators_logo2.png";
 export default function App() {
   const [authed, setAuthed] = useState(!!localStorage.getItem("jwt_token"));
 
-  if (!authed) {
-    return (
-      <div style={{ padding: 20 }}>
-        <LoginForm onSuccess={() => setAuthed(true)} />
-      </div>
-    );
-  }
-
   return (
     <BrowserRouter>
-      <div style={styles.appContainer}>
-        <div style={styles.header}>
-          <div style={styles.logoContainer}>
-          <img src={logo} alt="Island Innovators Logo" style={styles.logoImage} />
+      {!authed ? (
+        <div style={{ padding: 20 }}>
+          <LoginForm onSuccess={() => setAuthed(true)} />
         </div>
-          <h1 style={styles.heading}>Our Partners</h1>
-        </div>
+      ) : (
+        <div style={styles.appContainer}>
+          <div style={styles.header}>
+            <div style={styles.logoContainer}>
+              <img
+                src={logo}
+                alt="Island Innovators Logo"
+                style={styles.logoImage}
+              />
+            </div>
+            <h1 style={styles.heading}>Our Partners</h1>
+          </div>
 
-        <div style={styles.content}>
-          <Routes>
-            <Route path="/" element={<ContactList />} />
-            <Route path="/contacts/:id" element={<ContactDetail />} />
-          </Routes>
-        </div>
+          <div style={styles.content}>
+            <Routes>
+              <Route path="/" element={<ContactList />} />
+              <Route path="/contacts/:id" element={<ContactDetail />} />
+            </Routes>
+          </div>
 
-        <div style={styles.footer}>
-          <button
-            style={styles.logoutButton}
-            onClick={() => {
-              setToken(undefined);
-              setAuthed(false);
-            }}
-          >
-            Logout
-          </button>
+          <div style={styles.footer}>
+            <button
+              style={styles.logoutButton}
+              onClick={() => {
+                setToken(undefined);
+                setAuthed(false);
+              }}
+            >
+              Logout
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </BrowserRouter>
   );
 }

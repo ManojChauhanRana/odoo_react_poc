@@ -69,23 +69,25 @@ const styles: Record<string, React.CSSProperties> = {
 logoContainer: {
   border: "2px solid #fffee2",
   borderRadius: "15px",
-  width: "100%",
-  maxWidth: "500px", // ✅ caps desktop size
-  padding: "10px",   // ✅ space inside border
+  width: "90%",            // container takes 90% of viewport width
+  maxWidth: "400px",       // ✅ max width on large screens
+  padding: "10px",         // space inside border
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   marginBottom: "10px",
   marginTop: "30px",
   backgroundColor: "#3d454d",
-  boxSizing: "border-box" as const, // ✅ ensures padding doesn't overflow
+  boxSizing: "border-box" as const,
 },
 
 logoImage: {
-  width: "100%",   // ✅ scales with container
+  width: "100%",            // scales with container
+  maxWidth: "300px",        // ✅ logo itself capped
   height: "auto",
   objectFit: "contain" as const,
 },
+
   heading: {
     textAlign: "center",
     color: "#fffee2",

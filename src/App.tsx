@@ -58,44 +58,45 @@ const styles: Record<string, React.CSSProperties> = {
     minHeight: "100vh",
     display: "flex",
     flexDirection: "column",
-    backgroundColor: "rgb(61, 69, 77)", 
+    backgroundColor: "rgb(61, 69, 77)",
   },
   header: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-     padding: "0px 0px", 
-
-  },
-  logoImage: {
-    width: "400px",
-    height: "100px",
-    marginBottom: "-30px",
-    objectFit: 'contain' as const, 
+    padding: "0 1rem",
   },
   logoContainer: {
-  border: "2px solid #fffee2",
-  borderRadius: "15px",
-  width: "1280px",        
-  padding: "1px",            
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  marginBottom: "1px",
-  marginTop: "30px" ,      
-  backgroundColor: "#3d454d",  
-},
-
+    border: "2px solid #fffee2",
+    borderRadius: "15px",
+    maxWidth: "100%",      // ✅ responsive
+    width: "1280px",        // original max width
+    padding: "1px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: "1px",
+    marginTop: "30px",
+    backgroundColor: "#3d454d",
+  },
+  logoImage: {
+    maxWidth: "100%",       // ✅ scales down on small screens
+    height: "auto",         // maintain aspect ratio
+    objectFit: "contain" as const,
+    marginBottom: "-30px",
+  },
   heading: {
     textAlign: "center",
-    color: "#fffee2", 
-    fontSize: "50px",
+    color: "#fffee2",
+    fontSize: "clamp(24px, 5vw, 50px)", // ✅ scales between 24px and 50px
     fontWeight: "bold",
+    margin: "10px 0",
   },
   content: {
     flex: 1,
     margin: "20px auto",
     width: "90%",
+    maxWidth: "1200px",      // ✅ constrain on large screens
   },
   footer: {
     textAlign: "center",
@@ -109,6 +110,6 @@ const styles: Record<string, React.CSSProperties> = {
     backgroundColor: "#fffee2",
     color: "rgb(61, 69, 77)",
     cursor: "pointer",
-    fontSize: "25px",
+    fontSize: "clamp(16px, 2vw, 25px)", // ✅ scales down on smaller screens
   },
 };

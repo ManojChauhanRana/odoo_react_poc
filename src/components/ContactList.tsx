@@ -56,7 +56,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(4, 1fr)", // 4 cards per row
+    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", // responsive
     gap: 16,
   },
   card: {
@@ -85,6 +85,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     margin: "0 0 8px",
     color: "rgb(61, 69, 77)", // dark text for contrast
     fontWeight: 600,
+    fontSize: 16,
   },
   text: {
     margin: "4px 0",
